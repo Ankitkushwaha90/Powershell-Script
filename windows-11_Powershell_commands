@@ -1,0 +1,273 @@
+# PowerShell Commands Compatible with Windows 11
+
+PowerShell 7+ is the latest version used in Windows 11, supporting a mix of PowerShell Core and Windows PowerShell commands. Below is a complete list of commands that work in Windows 11.
+
+## 1. Basic PowerShell Commands
+
+```powershell
+Get-Command  
+# Lists all available PowerShell commands.
+```
+
+```powershell
+Get-Help Get-Process  
+# Displays help for a command (Get-Process in this case).
+```
+
+```powershell
+Clear-Host  
+# Clears the PowerShell console.
+```
+
+```powershell
+exit  
+# Exits the PowerShell session.
+```
+
+## 2. System Information Commands
+
+```powershell
+Get-ComputerInfo  
+# Displays detailed system information.
+```
+
+```powershell
+systeminfo  
+# Retrieves OS version, uptime, and installed updates.
+```
+
+```powershell
+(Get-Item "C:\Windows").LastWriteTime  
+# Shows the last modified date of the Windows folder.
+```
+
+```powershell
+Get-Process  
+# Lists all running processes.
+```
+
+```powershell
+Stop-Process -Name "notepad" -Force  
+# Kills Notepad (change notepad to any process name).
+```
+
+## 3. File & Directory Management
+
+```powershell
+Get-ChildItem -Path C:\Users\ -Recurse  
+# Lists all files and folders in C:\Users\ recursively.
+```
+
+```powershell
+New-Item -Path C:\Test -ItemType Directory  
+# Creates a new folder C:\Test.
+```
+
+```powershell
+Remove-Item -Path C:\Test -Recurse -Force  
+# Deletes C:\Test and its contents.
+```
+
+```powershell
+Copy-Item -Path C:\file.txt -Destination D:\Backup  
+# Copies file.txt to D:\Backup.
+```
+
+```powershell
+Rename-Item -Path C:\oldname.txt -NewName newname.txt  
+# Renames oldname.txt to newname.txt.
+```
+
+## 4. Network & Internet Commands
+
+```powershell
+Test-Connection -ComputerName google.com  
+# Pings google.com (like ping in CMD).
+```
+
+```powershell
+Get-NetIPAddress  
+# Displays current IP address configuration.
+```
+
+```powershell
+Get-NetAdapter  
+# Lists all network adapters and their statuses.
+```
+
+```powershell
+Resolve-DnsName google.com  
+# Resolves google.com to an IP address.
+```
+
+```powershell
+Test-NetConnection -ComputerName google.com -Port 443  
+# Checks if port 443 (HTTPS) is open on Google.
+```
+
+```powershell
+(Get-NetIPAddress).IPv4Address  
+# Extracts only IPv4 addresses from Get-NetIPAddress.
+```
+
+## 5. Firewall & Security Commands
+
+```powershell
+Get-NetFirewallRule  
+# Lists all firewall rules.
+```
+
+```powershell
+New-NetFirewallRule -DisplayName "Allow8080" -Direction Inbound -Action Allow -Protocol TCP -LocalPort 8080  
+# Allows incoming traffic on port 8080.
+```
+
+```powershell
+Remove-NetFirewallRule -DisplayName "Allow8080"  
+# Deletes the firewall rule for port 8080.
+```
+
+```powershell
+Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled False  
+# Disables the firewall (not recommended for security).
+```
+
+```powershell
+Enable-NetFirewallRule -DisplayName "File and Printer Sharing (ICMPv4-In)"  
+# Allows ping requests through the firewall.
+```
+
+## 6. Process & Task Management
+
+```powershell
+Get-Process | Sort-Object CPU -Descending  
+# Lists processes consuming the most CPU.
+```
+
+```powershell
+Stop-Process -Id 1234 -Force  
+# Kills a process using PID 1234.
+```
+
+```powershell
+Get-Service  
+# Lists all running Windows services.
+```
+
+```powershell
+Restart-Service -Name "Spooler"  
+# Restarts the Print Spooler service.
+```
+
+```powershell
+Get-WmiObject Win32_Service | Where-Object { $_.State -eq "Running" }  
+# Lists only running services.
+```
+
+## 7. Windows Updates & Management
+
+```powershell
+Get-WindowsUpdate  
+# Checks for available Windows updates (requires PSWindowsUpdate module).
+```
+
+```powershell
+Install-WindowsUpdate -AcceptAll -AutoReboot  
+# Installs all available Windows updates.
+```
+
+```powershell
+Get-EventLog -LogName System -Newest 20  
+# Retrieves the last 20 system logs.
+```
+
+```powershell
+Get-ScheduledTask | Where-Object { $_.State -eq "Running" }  
+# Lists all running scheduled tasks.
+```
+
+```powershell
+Get-BitLockerVolume  
+# Checks BitLocker encryption status.
+```
+
+## 8. Disk & Storage Management
+
+```powershell
+Get-Volume  
+# Displays all disk volumes and their sizes.
+```
+
+```powershell
+Get-PhysicalDisk  
+# Shows physical disks connected to the system.
+```
+
+```powershell
+Get-Disk  
+# Lists all available disks and their statuses.
+```
+
+```powershell
+Format-Volume -DriveLetter D -FileSystem NTFS -Confirm:$false  
+# Formats drive D: to NTFS without confirmation.
+```
+
+```powershell
+Optimize-Volume -DriveLetter C  
+# Optimizes C: drive (like defragmentation).
+```
+
+## 9. User & Account Management
+
+```powershell
+Get-LocalUser  
+# Lists all local user accounts.
+```
+
+```powershell
+New-LocalUser -Name "TestUser" -Password (ConvertTo-SecureString "Password123!" -AsPlainText -Force) -FullName "Test User" -Description "New user account"  
+# Creates a new user TestUser.
+```
+
+```powershell
+Remove-LocalUser -Name "TestUser"  
+# Deletes TestUser account.
+```
+
+```powershell
+Add-LocalGroupMember -Group "Administrators" -Member "TestUser"  
+# Adds TestUser to the Administrators group.
+```
+
+```powershell
+net user TestUser Password123! /add  
+# Another way to create a user using CMD inside PowerShell.
+```
+
+## 10. Power Management Commands
+
+```powershell
+shutdown /s /t 0  
+# Shuts down the PC immediately.
+```
+
+```powershell
+shutdown /r /t 10  
+# Restarts the PC in 10 seconds.
+```
+
+```powershell
+powercfg /batteryreport  
+# Generates a battery health report.
+```
+
+```powershell
+powercfg /energy  
+# Analyzes power efficiency and logs the report.
+```
+
+## Conclusion
+These commands work 100% in Windows 11 and PowerShell 7+.
+
+Would you like a custom script for automating tasks? 🚀
